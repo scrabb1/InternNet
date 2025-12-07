@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>InternNet</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">🎓 InternNet</h1>
+      <nav class="nav-right" id="nav-right">
+        <button id="show-signup" class="nav-btn">Student Signup</button>
+        <button id="show-admin-signup" class="nav-btn">School Admin</button>
+        <button id="show-login" class="nav-btn">Student Login</button>
+        <button id="show-admin-login" class="nav-btn">Admin Login</button>
+        <span id="user-info" class="user-badge"></span>
+        <button type="button" id="logout" class="nav-btn logout-btn" style="display:none;">Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- LOGIN HOMEPAGE (shown when not logged in) -->
+  <div id="homepage" class="homepage" style="display:none;">
+    <main class="homepage-main">
+      <div class="homepage-hero">
+        <h1>Find Your Perfect Internship on InternNet</h1>
+        <p>Discover and apply to internships from top companies and organizations</p>
+      </div>
+
+      <div class="homepage-content">
+        <div class="homepage-forms">
+          <!-- Student Signup -->
+          <div id="signup-form" class="auth-form card" style="display:none;">
+            <h3>Create Student Account</h3>
+            <form>
+              <input id="su-username" class="form-input" placeholder="Username" required />
+              <input id="su-password" class="form-input" placeholder="Password" type="password" required />
+              <input id="su-first" class="form-input" placeholder="First Name" required />
+              <input id="su-last" class="form-input" placeholder="Last Name" required />
+              <input id="su-school" class="form-input" placeholder="School" required />
+              <input id="su-emailp" class="form-input" placeholder="Personal Email" type="email" required />
+              <input id="su-emails" class="form-input" placeholder="School Email" type="email" required />
+              <input id="su-age" class="form-input" placeholder="Age" type="number" required />
+              <input id="su-grade" class="form-input" placeholder="Grade" type="number" required />
+              <input id="su-extracurriculars" class="form-input" placeholder="Extracurriculars (comma separated)" />
+              <input id="su-interests" class="form-input" placeholder="Interests (comma separated)" />
+              <input id="su-gpa" class="form-input" placeholder="GPA (e.g., 3.8)" type="number" step="0.01" />
+              <input id="su-courses" class="form-input" placeholder="Courses currently taking (comma separated)" />
+              <button type="button" id="signup-btn" class="btn btn-primary btn-block">Create Account</button>
+              <div id="signup-status" class="status-msg"></div>
+            </form>
+          </div>
+
+          <!-- Admin Signup -->
+          <div id="admin-signup-form" class="auth-form card" style="display:none;">
+            <h3>School Admin Registration</h3>
+            <form>
+              <input id="asu-username" class="form-input" placeholder="Admin Username" required />
+              <input id="asu-password" class="form-input" placeholder="Password" type="password" required />
+              <input id="asu-school" class="form-input" placeholder="School Name" required />
+              <input id="asu-email" class="form-input" placeholder="School Email" type="email" required />
+              <button type="button" id="admin-signup-btn" class="btn btn-primary btn-block">Register School</button>
+              <div id="admin-signup-status" class="status-msg"></div>
+            </form>
+          </div>
+
+          <!-- Student Login (default shown) -->
+          <div id="login-form" class="auth-form card">
+            <h3>Student Login</h3>
+            <form>
+              <input id="li-username" class="form-input" placeholder="Username" required />
+              <input id="li-password" class="form-input" placeholder="Password" type="password" required />
+              <button type="button" id="login-btn" class="btn btn-primary btn-block">Login</button>
+              <div id="login-status" class="status-msg"></div>
+              <p style="text-align:center; margin-top:12px; font-size:13px; color:var(--text-secondary);">
+                Don't have an account? <a href="#" id="link-to-signup" style="color:var(--accent); font-weight:600;">Sign up</a>
+              </p>
+            </form>
+          </div>
+
+          <!-- Admin Login -->
+          <div id="admin-login-form" class="auth-form card" style="display:none;">
+            <h3>Admin Login</h3>
+            <form>
+              <input id="ali-username" class="form-input" placeholder="Admin Username" required />
+              <input id="ali-password" class="form-input" placeholder="Password" type="password" required />
+              <button type="button" id="admin-login-btn" class="btn btn-primary btn-block">Login as Admin</button>
+              <div id="admin-login-status" class="status-msg"></div>
+              <p style="text-align:center; margin-top:12px; font-size:13px; color:var(--text-secondary);">
+                Don't have an admin account? <a href="#" id="link-to-admin-signup" style="color:var(--accent); font-weight:600;">Register</a>
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <div class="homepage-info">
+          <div class="info-card">
+            <div class="info-icon">🔍</div>
+            <h4>Search & Filter</h4>
+            <p>Find internships by company, location, category, and more</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📋</div>
+            <h4>Track Applications</h4>
+            <p>Keep track of your internship applications and their status</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">👤</div>
+            <h4>Build Your Profile</h4>
+            <p>Showcase your skills, interests, and academic achievements</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MAIN APP (shown when logged in) -->
+  <div id="app-container" style="display:none;">
+    <main>
+      <!-- Tab Navigation -->
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="internships-tab">💼 Internships</button>
+          <button class="tab-btn" data-tab="recommendations-tab">✨ AI Recommendations</button>
+          <button class="tab-btn" data-tab="profile-tracker-tab">👤 Profile & Tracker</button>
+          <button id="show-profile" class="nav-btn" style="display:none;">Profile</button>
+        </div>
+      </div>
+
+      <!-- Internships Tab -->
+      <div id="internships-tab" class="tab-content active">
+        <!-- Search & Results Section -->
+        <section class="card hero-section">
+          <h2>Find Your Next Opportunity</h2>
+          <div class="search-wrapper">
+            <input id="search-q" class="search-input" placeholder="Search by company, location, or skill..." />
+            <select id="filter-category" class="filter-select">
+              <option value="">All Categories</option>
+            </select>
+            <button id="search-btn" class="btn btn-primary">Search</button>
+            <button id="refresh-btn" class="btn btn-secondary">Clear</button>
+          </div>
+        </section>
+
+        <div id="results" class="results-grid"></div>
+
+        <!-- School Admin Portal -->
+        <section id="admin-section" class="card admin-portal" style="display:none;">
+          <h2>📌 School Admin Portal — Add Internship</h2>
+          <p class="admin-subtitle">Manage internship listings for your school</p>
+          <form id="add-internship-form" class="admin-form">
+            <div class="form-group">
+              <label>Program Name *</label>
+              <input id="i-name" class="form-input" placeholder="e.g., Software Engineering Internship" required />
+            </div>
+            <div class="form-group">
+              <label>Organization *</label>
+              <input id="i-org" class="form-input" placeholder="e.g., Google, Microsoft" required />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Website (optional)</label>
+                <input id="i-url" class="form-input" placeholder="https://..." />
+              </div>
+              <div class="form-group">
+                <label>Contact Email/Phone *</label>
+                <input id="i-contact" class="form-input" placeholder="contact@example.com" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Category *</label>
+                <input id="i-category" class="form-input" placeholder="e.g., Technology, Finance" required />
+              </div>
+              <div class="form-group">
+                <label>Deadline *</label>
+                <input id="i-deadline" class="form-input" placeholder="e.g., 2024-12-31" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Location *</label>
+              <input id="i-location" class="form-input" placeholder="e.g., San Francisco, CA" required />
+            </div>
+            <div class="form-group">
+              <label>Description *</label>
+              <textarea id="i-desc" class="form-input form-textarea" placeholder="Detailed description of the internship..." required></textarea>
+            </div>
+            <button type="submit" id="add-i-btn" class="btn btn-success btn-block">Add Internship</button>
+            <div id="add-i-status" class="status-msg"></div>
+          </form>
+        </section>
+      </div>
+
+      <!-- AI Recommendations Tab -->
+      <div id="recommendations-tab" class="tab-content">
+        <section class="card hero-section">
+          <h2>✨ Your AI-Powered Recommendations</h2>
+          <p>Based on your profile, interests, and experience, we've found the perfect internships for you</p>
+          <button id="load-recommendations-btn" class="btn btn-primary">Generate Recommendations</button>
+        </section>
+        <div id="recommendations-container" class="results-grid"></div>
+        <div id="recommendations-loading" style="display:none; text-align: center; padding: 40px;">
+          <p>Loading your personalized recommendations...</p>
+        </div>
+      </div>
+
+      <!-- Profile & Tracker Tab -->
+      <div id="profile-tracker-tab" class="tab-content">
+        <!-- Profile Section -->
+        <section id="profile-section" class="card">
+          <h2>Your Profile</h2>
+          <div class="profile-card">
+            <div>
+              <div class="profile-avatar" id="profile-avatar">S</div>
+              <div style="margin-top:12px;">
+                <div class="profile-meta">
+                  <h3 id="meta-name">Student Name</h3>
+                  <div id="meta-school" style="color:var(--gray-400);">School Name</div>
+                  <div style="margin-top:8px;" id="meta-chips">
+                    <!-- chips injected by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <form id="profile-form">
+                <div class="profile-fields">
+                  <input id="p-first" class="form-input" placeholder="First name" />
+                  <input id="p-last" class="form-input" placeholder="Last name" />
+                  <input id="p-school" class="form-input" placeholder="School" />
+                  <input id="p-emailp" class="form-input" placeholder="Personal Email" type="email" />
+                  <input id="p-age" class="form-input" placeholder="Age" type="number" />
+                  <input id="p-grade" class="form-input" placeholder="Grade" type="number" />
+                  <input id="p-extracurriculars" class="form-input" placeholder="Extracurriculars (comma separated)" />
+                  <input id="p-interests" class="form-input" placeholder="Interests (comma separated)" />
+                  <input id="p-gpa" class="form-input" placeholder="GPA" type="number" step="0.01" />
+                  <input id="p-courses" class="form-input" placeholder="Courses currently taking (comma separated)" />
+                </div>
+                <div class="profile-actions">
+                  <button type="button" id="save-profile-btn" class="btn btn-primary">Save Profile</button>
+                  <span id="profile-status" class="status-msg"></span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tracker Section -->
+        <section class="card">
+          <h3>📋 Your Application Tracker</h3>
+          <div id="tracker-list" class="tracker-content">(not logged in)</div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 InternNet. Connecting students with opportunities.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

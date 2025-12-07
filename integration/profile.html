@@ -1,0 +1,32 @@
+<button id="show-profile" class="nav-btn" style="display:none;">👤 AI Profile Matcher</button>
+
+<section id="profile-section" class="card" style="display:none;">
+  <h3>🤖 AI Internship Matcher</h3>
+  <p>Tell us about yourself, and our AI Agent will scan the database to find your best fit.</p>
+  
+  <form id="ai-profile-form">
+    <div class="form-group">
+      <label>Your Skills (comma separated)</label>
+      <input id="p-skills" class="form-input" placeholder="e.g. Python, Java, Public Speaking, Excel" />
+    </div>
+    <div class="form-group">
+      <label>Interests & Hobbies</label>
+      <textarea id="p-interests" class="form-input" placeholder="e.g. I love building robots, trading stocks, and volunteering at the shelter..." rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Career Goals</label>
+      <textarea id="p-goals" class="form-input" placeholder="e.g. I want to become a software engineer or a data scientist." rows="2"></textarea>
+    </div>
+    
+    <button type="submit" id="get-ai-matches" class="btn btn-primary btn-block">✨ Generate Recommendations</button>
+  </form>
+
+  <div id="ai-loading" style="display:none; text-align:center; margin-top:20px;">
+    <p>🤖 AI is analyzing opportunities...</p>
+  </div>
+
+  <div id="ai-results-container" style="margin-top: 20px;"></div>
+</section>
+
+
+
